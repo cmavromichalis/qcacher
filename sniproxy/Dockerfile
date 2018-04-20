@@ -2,6 +2,7 @@ FROM alpine:3.7
 
 MAINTAINER Dan Porter <dpreid@gmail.com>
 
+# Needs newer than 1cbba1b
 ENV SNIPROXY_VERSION=0.5.0 \
     SNIPROXY_SHASUM="0b8dd06f9aa9e1c4151b572caf645ffceacdd35a139ded16a7fb0035452c17e5"
 
