@@ -1,4 +1,5 @@
-version: '2'
+version: '3'
+
 services:
     nginx:
         image: qcacher/nginx
@@ -6,19 +7,31 @@ services:
         volumes:
             - cache-data:/srv
         ports:
-            - 0.0.0.0:80:80
+            - 80:80
+
     unbound:
         image: qcacher/unbound
         build: unbound
         ports:
-            - 0.0.0.0:53:53/udp
+            - 53:53/udp
         environment:
             DNS_IP: 192.168.86.183
+
     sniproxy:
+        deploy:
+            replicas: 2
         image: qcacher/sniproxy
         build: sniproxy
         ports:
-            - 0.0.0.0:443:443
+            - 443:443
+
+    visualizer:
+        image: dockersamples/visualizer:stable
+        ports:
+            - 8080:8080
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock" # Give visualizer access to the hosts socker file for Docker
+
 volumes:
     cache-data:
         driver: local
